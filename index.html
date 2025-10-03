@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サイト内 YouTube プレイヤー</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 2em; text-align: center; background: #f0f0f0; }
+    input { width: 60%; padding: 0.5em; font-size: 1em; }
+    button { padding: 0.5em 1em; font-size: 1em; margin-left: 0.5em; }
+    iframe { margin-top: 2em; width: 100%; max-width: 800px; height: 450px; border: none; }
+    @media(max-width:600px){ iframe { height: 250px; } }
+  </style>
+</head>
+<body>
+  <h1>サイト内 YouTube プレイヤー</h1>
+  <p>動画URLまたは動画IDを入力してください</p>
+  <input type="text" id="videoInput" placeholder="例: https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+  <button onclick="playVideo()">再生</button>
+
+  <iframe id="player" src="" allowfullscreen></iframe>
+
+  <script>
+    function extractVideoId(url) {
+      // YouTube URLからIDを抽出。IDだけ入力してもOK
+      const match = url.match(/(?:v=|\/)([a-zA-Z0-9_-]{11})/);
+      return match ? match[1] : url;
+    }
+
+    function playVideo() {
+      const input = document.getElementById('videoInput').value.trim();
+      if (!input) return alert('動画URLまたはIDを入力してください');
+      const videoId = extractVideoId(input);
+      const iframe = document.getElementById('player');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    }
+  </script>
+</body>
+</html>
